@@ -25,7 +25,7 @@ export default function MainHeader() {
 
           <li>
             <Link
-              href="/posts/share"
+              href="/share"
               className="hover:text-blue-600 hover:underline transition"
             >
               Add Post

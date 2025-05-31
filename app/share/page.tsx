@@ -2,6 +2,7 @@
 
 import { useFormState } from "react-dom";
 import { sharePost } from "@/lib/actions";
+import { useActionState } from "react";
 
 interface PostDetailProps {
   params: { slug: string }; 
@@ -16,7 +17,7 @@ export default function PostDetail() {
     message: '',
   };
 
-  const [state, formAction] = useFormState(sharePost, initialState);
+  const [state, formAction] = useActionState(sharePost, initialState);
 
   return (
     <>
