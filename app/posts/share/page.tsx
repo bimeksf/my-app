@@ -1,47 +1,52 @@
+'use client';
 
-interface CardDetailProps {
-  title: string
-  slug?: string
-  date?: Date
-  author?: string
-  description: string
-  tags: string[],
-params: { slug: string }; 
+import { useFormState } from "react-dom";
+import { sharePost } from "@/lib/actions";
+
+interface PostDetailProps {
+  params: { slug: string }; 
 }
 
-export default async function PostDetail() {
+type FormStateType = {
+  message: string;
+};
 
+export default function PostDetail() {
+  const initialState: FormStateType = {
+    message: '',
+  };
 
-
-
+  const [state, formAction] = useFormState(sharePost, initialState);
 
   return (
     <>
+      <form action={formAction}>
+        <div className="flex flex-col">
+          <label>
+            Title
+            <input type="text" name="title" required />
+          </label>
+        </div>
 
-      <form>
-          <label htmlFor="">
-              Title
-              <input type="text" name="title"/>
-          </label>
-          <label htmlFor="">
-              Author
-              <input type="text" name="author"/>
-          </label>
-          <label htmlFor="">
-              tags
-              <input type="text" name="tags"/>
-          </label>
-          <label htmlFor="">
-              descritpiton
-              <input type="text" name="descritpiton"/>
-          </label>
-        
+        <label>
+          Author
+          <input type="text" name="author" required />
+        </label>
+
+        <label>
+          Tags
+          <input type="text" name="tags" required />
+        </label>
+
+        <label>
+          Description
+          <input type="text" name="description" required />
+        </label>
 
         <button type="submit">Submit</button>
-        
-        
-        
-        </form>      
+      </form>
+
+      {state.message && <p>{state.message}</p>}
     </>
-  )
+  );
 }

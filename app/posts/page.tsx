@@ -1,29 +1,23 @@
+import Card from "../components/Card";
+import { getAllPosts, Post } from "../../lib/actions";
 
-import Card from "../components/Card"
+export default async function Page() {
+  const posts: Post[] = await getAllPosts();
 
-
-export default function page(){
-
-const posts = getAllPosts()
-
-    return (
-
-            <section>
-
-
-            <div>
-                {posts.map(post=>(
-                <Card  title={post.title} author={post.author} date={post.date} description={post.description}   tags={post.tags}/>
-                ))}
-            </div>
-
-
-            </section>
-
-
-
-
-    )
-
-
+  return (
+    <section>
+      <div>
+        {posts.map((post) => (
+          <Card
+            key={post.id}
+            title={post.title}
+            author={post.author ?? undefined}
+            date={post.date ? new Date(post.date) : undefined}
+            description={post.description}
+            tags={post.tags ? post.tags.split(",") : []}
+          />
+        ))}
+      </div>
+    </section>
+  );
 }
