@@ -1,65 +1,17 @@
-"use client"
+import { getAllPosts } from '@/lib/actions';
 
-import { useFormState } from "react-dom";
-import { sharePost } from "@/lib/actions";
+export default async function PostDetail({ params }: { params: { slug: string } }) {
+    const {slug} = params
+  const posts = await getAllPosts();
+  const post = posts.find(p => p.slug === slug);
 
+  if (!post) return <div>Post nenalezen</div>;
 
-
-    interface PostDetailProps {
-  params: { slug: string }; 
+  return (
+    <div className="p-8 max-w-3xl mx-auto">
+      <h1 className="text-3xl font-bold mb-4">{post.title}</h1>
+      <p className="text-sm text-gray-600 mb-4">{post.author} · {post.date}</p>
+      <p>{post.description}</p>
+    </div>
+  );
 }
-    export default function PostDetail({params}:PostDetailProps){
-       const {slug} = params
-
-
-
-
-            type FormStateType = {
-  message: string;
-};
-
-
-       const initialState: FormStateType = {
-message: '',
-};
-const [state, formAction] =useFormState(sharePost, initialState)        
-        return <>
-        
-            <form action={formAction}>
-
-
-                    <div className="flex flex-col">
-
-                    <label htmlFor="">
-                            Title 
-                        <input type="text" name="title"/>
-
-                    </label>
-                    </div>
-
-                    <label htmlFor="">
-                                Author
-                        <input type="text" name="author"/>
-                    </label>
-
-                    
-                    <label htmlFor="">
-                                Tags
-                        <input type="text" name="tags" />
-                    </label>
-
-                    <label htmlFor="">
-                        Descritpiton
-                        <input type="text" name="description"/>
-                    </label>
-
-                        
-                    <button type="button">Submit</button>
-
-            </form>
-
-        
-        
-        </>
-
-    }

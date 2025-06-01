@@ -1,35 +1,27 @@
-
-
-
+import Link from 'next/link';
 interface CardProps {
-  title: string
-  slug?: string
-  date?: Date
-  author?: string
-  description: string
-  tags: string[]
+  title: string;
+  author?: string;
+  date?: Date;
+  description: string;
+  tags?: string[];
+  slug: string;
 }
-
-
-export default function Card({title, date, description , tags =[] } : CardProps) {
+export default function Card({ title, author, date, description, tags, slug }: CardProps) {
   return (
-    <div className="bg-white shadow-sm p-4 rounded-md w-[420px] h-[550px] hover:shadow-2xl hover:bg-slate-50 hover:opacity-90  hover:scale-105   transition-all duration-200 ease-in-out ">
-     
-
-      <h1 className="text-2xl font-bold">{title}</h1>
-      <p className="text-sm font-light my-2 text-slate-700">
-       {description}
-      </p>
-      <p className="my-2 text-sm text-slate-500">       {date?.toLocaleDateString() || '—'}
-</p>
-
-      <div className="flex flex-wrap gap-2 text-sm">
-        {tags.map((tag, index) => (
-          <div key={index} className="bg-slate-600 text-white rounded-md px-2 py-1">
-            {tag}
-          </div>
-        ))}
+    <Link href={`/posts/${slug}`}>
+      <div className="bg-white p-4 rounded-lg shadow-md hover:shadow-lg transition-shadow cursor-pointer">
+        <h2 className="text-xl font-bold mb-2">{title}</h2>
+        <p className="text-sm text-gray-500 mb-2">
+          {author} · {date?.toLocaleDateString()}
+        </p>
+        <p className="text-gray-700 mb-2">{description}</p>
+        <div className="flex gap-2 flex-wrap text-sm text-blue-600">
+          {tags?.map((tag, index) => (
+            <span key={index}>#{tag}</span>
+          ))}
+        </div>
       </div>
-    </div>
+    </Link>
   );
 }
