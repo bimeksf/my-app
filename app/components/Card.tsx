@@ -18,7 +18,7 @@ export default function Card({ title, author, date, description, tags, slug }: C
         <p className="text-gray-700 mb-2">{description}</p>
         <div className="flex gap-2 flex-wrap text-sm text-blue-600">
           {tags?.map((tag, index) => (
-            <span key={index}>#{tag}</span>
+            <span className='p-2 bg-amber-300 rounded-2xl' key={index}>{tag}</span>
           ))}
         </div>
       </div>
