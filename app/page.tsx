@@ -7,7 +7,7 @@ export default function Home() {
   return (
     <>
     
-    <section className="h-screen flex justify-center">
+    <section className="h-screen flex justify-center bg-[#eff0f3]">
 
       <div className="text-center p-4 m-auto">
 

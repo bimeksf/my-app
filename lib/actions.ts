@@ -10,7 +10,7 @@ export interface Post {
   author?: string | null;
   date?: string | null;
   description: string;
-  tags?: string | null;
+  tags: string ;
 }
 
 export async function getAllPosts(): Promise<Post[]> {
