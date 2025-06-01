@@ -6,21 +6,30 @@ import Card from "../components/Card";
 import { Post } from "../../lib/actions";
 
 export default function ClientWrapper({ posts }: { posts: Post[] }) {
-  const [activeTag, setActiveTag] = useState<string | null>(null);
+  const [activeTags, setActiveTags] = useState<string[]>([]);
+
+  const toggleTag = (tag: string) => {
+    setActiveTags(prev =>
+      prev.includes(tag)
+        ? prev.filter(t => t !== tag) 
+        : [...prev, tag]              
+    );
+  };
 
   const filteredPosts = useMemo(() => {
-    if (!activeTag) return posts;
-    return posts.filter((post) =>
-      post.tags?.split(",").map(tag => tag.trim()).includes(activeTag)
-    );
-  }, [activeTag, posts]);
+    if (activeTags.length === 0) return posts;
+
+    return posts.filter((post) => {
+      const postTags = post.tags?.split(',').map(tag => tag.trim()) || [];
+      return postTags.some(tag => activeTags.includes(tag));
+    });
+  }, [activeTags, posts]);
 
   return (
     <section className="bg-[#eff0f3] min-h-screen">
       <div className="flex gap-2 justify-center p-4">
-        <MiniNav posts={posts} onClick={(tag) => setActiveTag(activeTag === tag ? null : tag)} activeTag={activeTag} />
+        <MiniNav posts={posts} onClick={toggleTag} activeTags={activeTags} />
       </div>
-
 
 
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
